@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class LectureInfo {
+public class LectureInfoEntity {
 
     private String title;
 
@@ -26,8 +26,4 @@ public class LectureInfo {
     @Column(columnDefinition = "TEXT")
     @Convert(converter = StringToListConverter.class)
     private List<String> target;
-
-    public void updateTitle(String title) {
-        this.title = title;
-    }
 }

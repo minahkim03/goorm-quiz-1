@@ -1,9 +1,9 @@
-package org.learning.goormquiz.lecture.domain.dto.response;
+package org.learning.goormquiz.lecture.application.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Builder;
-import org.learning.goormquiz.lecture.repo.entity.Lecture;
+import org.learning.goormquiz.lecture.domain.Lecture;
 
 @Builder
 public record GetLectureResponseDto(
@@ -15,6 +15,17 @@ public record GetLectureResponseDto(
     @JsonProperty(value = "lecture_url") String lectureUrl,
     List<String> goals,
     List<String> target) {
+
+    public GetLectureResponseDto(Lecture lecture) {
+        this.lectureId = lecture.getLectureId();
+        this.title = lecture.getTitle();
+        this.imageUrl = lecture.getImageUrl();
+        this.instructor = lecture.getInstructor();
+        this.price = lecture.getPrice();
+        this.lectureUrl = lecture.getLectureUrl();
+        this.goals = lecture.getGoals();
+        this.target = lecture.getTarget();
+    }
 
     public static GetLectureResponseDto fromEntity(Lecture lecture) {
         return GetLectureResponseDto.builder()

@@ -7,14 +7,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor
-public class Price {
+public class PriceEntity {
 
     private int price;
 
-    public Price(int price) {
-        if (price < 0) {
-            throw new IllegalArgumentException();
-        }
+    public PriceEntity(int price) {
         this.price = price;
     }
 }
