@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.learning.goormquiz.lecture.domain.Lecture;
 import org.learning.goormquiz.lecture.domain.MyLecture;
 import org.learning.goormquiz.member.repo.entity.MemberEntity;
 
@@ -17,6 +19,7 @@ import org.learning.goormquiz.member.repo.entity.MemberEntity;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "my_lecture")
 public class MyLectureEntity {
 
     @Id
@@ -30,14 +33,4 @@ public class MyLectureEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id")
     private LectureEntity lecture;
-
-    public MyLectureEntity(MyLecture myLecture, LectureEntity lectureEntity) {
-        this.id = myLecture.getId();
-        this.member = new MemberEntity(myLecture.getMember());
-        this.lecture = lectureEntity;
-    }
-
-    public MyLecture toMyLecture() {
-        return new MyLecture(id, member.toMember(), lecture.toLecture());
-    }
 }

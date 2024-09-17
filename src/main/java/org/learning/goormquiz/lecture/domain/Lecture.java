@@ -14,17 +14,6 @@ public class Lecture {
     private String imageUrl;
     private Price price;
     private String lectureUrl;
-    private MyLectures myLectures;
-
-    public Lecture(Long lectureId, LectureInfo lectureInfo, String instructor, String imageUrl,
-        Price price, String lectureUrl) {
-        this.lectureId = lectureId;
-        this.lectureInfo = lectureInfo;
-        this.instructor = instructor;
-        this.imageUrl = imageUrl;
-        this.price = price;
-        this.lectureUrl = lectureUrl;
-    }
 
     public int getPrice() {
         return price.getPrice();
@@ -40,10 +29,6 @@ public class Lecture {
 
     public List<String> getTarget() {
         return lectureInfo.getTarget();
-    }
-
-    public List<MyLecture> getMyLectures() {
-        return myLectures.getMyLectures();
     }
 
     public void updateTitle(String title) {

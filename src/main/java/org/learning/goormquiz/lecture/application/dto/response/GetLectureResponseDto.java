@@ -16,17 +16,6 @@ public record GetLectureResponseDto(
     List<String> goals,
     List<String> target) {
 
-    public GetLectureResponseDto(Lecture lecture) {
-        this.lectureId = lecture.getLectureId();
-        this.title = lecture.getTitle();
-        this.imageUrl = lecture.getImageUrl();
-        this.instructor = lecture.getInstructor();
-        this.price = lecture.getPrice();
-        this.lectureUrl = lecture.getLectureUrl();
-        this.goals = lecture.getGoals();
-        this.target = lecture.getTarget();
-    }
-
     public static GetLectureResponseDto fromEntity(Lecture lecture) {
         return GetLectureResponseDto.builder()
             .lectureId(lecture.getLectureId())

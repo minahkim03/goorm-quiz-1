@@ -7,6 +7,6 @@ public record GetLectureListResponseDto(List<GetLectureResponseDto> dtos) {
 
     public static GetLectureListResponseDto from(Lectures lectures) {
         return new GetLectureListResponseDto(lectures.
-            getLectures().stream().map(GetLectureResponseDto::new).toList());
+            getLectures().stream().map(GetLectureResponseDto::fromEntity).toList());
     }
 }

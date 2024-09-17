@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface JpaMyLectureRepository extends JpaRepository<MyLectureEntity, Long> {
 
     @Query("select l from LectureEntity l"
-        + " join fetch l.myLecture ml"
+        + " join fetch l.myLectures ml"
         + " join fetch ml.member m"
         + " where m.memberId=:memberId")
     List<LectureEntity> findAllByMemberId(@Param("memberId") Long memberId);

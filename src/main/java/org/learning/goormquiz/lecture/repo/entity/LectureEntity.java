@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
@@ -20,6 +21,7 @@ import org.learning.goormquiz.lecture.domain.Price;
 @Getter
 @Entity
 @NoArgsConstructor
+@Table(name = "lecture")
 public class LectureEntity {
 
     @Id
@@ -39,8 +41,7 @@ public class LectureEntity {
 
     private String lectureUrl;
 
-    @OneToMany
-    @JoinColumn(name = "my_lecture")
+    @OneToMany(mappedBy="lecture")
     private List<MyLectureEntity> myLectures = new ArrayList<>();
 
     public LectureEntity(Long lectureId, LectureInfoEntity lectureInfo, String instructor,
@@ -79,13 +80,10 @@ public class LectureEntity {
         this.imageUrl = lecture.getImageUrl();
         this.price = new PriceEntity(lecture.getPrice());
         this.lectureUrl = lecture.getLectureUrl();
-        this.myLectures = lecture.getMyLectures().stream()
-            .map(myLecture -> new MyLectureEntity(myLecture, this)).toList();
     }
 
     public Lecture toLecture() {
         return new Lecture(lectureId, new LectureInfo(getTitle(), getGoals(), getTarget()),
-            instructor, imageUrl, new Price(getPrice()), lectureUrl,
-            new MyLectures(myLectures.stream().map(MyLectureEntity::toMyLecture).toList()));
+            instructor, imageUrl, new Price(getPrice()), lectureUrl);
     }
 }
