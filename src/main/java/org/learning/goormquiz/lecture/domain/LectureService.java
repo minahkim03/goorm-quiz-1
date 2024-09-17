@@ -5,7 +5,8 @@ import org.learning.goormquiz.common.domain.dto.CommonSuccessDto;
 import org.learning.goormquiz.lecture.domain.dto.request.CreateLectureRequestDto;
 import org.learning.goormquiz.lecture.domain.dto.request.UpdateLectureTitleRequestDto;
 import org.learning.goormquiz.lecture.domain.dto.response.GetLectureResponseDto;
-import org.learning.goormquiz.lecture.domain.interfaces.LectureRepository;
+import org.learning.goormquiz.lecture.domain.interfaces.LectureCommandRepository;
+import org.learning.goormquiz.lecture.domain.interfaces.LectureQueryRepository;
 import org.learning.goormquiz.lecture.repo.entity.Lecture;
 import org.learning.goormquiz.lecture.repo.entity.LectureInfo;
 import org.learning.goormquiz.lecture.repo.entity.Price;
@@ -17,15 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LectureService {
 
-    private final LectureRepository lectureRepository;
+    private final LectureQueryRepository lectureQueryRepository;
+    private final LectureCommandRepository lectureCommandRepository;
 
     public GetLectureResponseDto findLecture(Long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId)
+        Lecture lecture = lectureQueryRepository.findById(lectureId)
             .orElseThrow(IllegalArgumentException::new);
-        return new GetLectureResponseDto(lecture.getLectureId(), lecture.getTitle(),
-            lecture.getImageUrl(),
-            lecture.getInstructor(), lecture.getPrice(), lecture.getLectureUrl(),
-            lecture.getGoals(), lecture.getTarget());
+        return GetLectureResponseDto.fromEntity(lecture);
     }
 
     @Transactional
@@ -33,13 +32,13 @@ public class LectureService {
         LectureInfo info = new LectureInfo(dto.title(), dto.goals(), dto.target());
         Lecture lecture = new Lecture(null, info, dto.instructor(), dto.imageUrl(),
             new Price(dto.price()), dto.lectureUrl());
-        lectureRepository.save(lecture);
+        lectureCommandRepository.save(lecture);
         return new CommonSuccessDto(true);
     }
 
     @Transactional
     public CommonSuccessDto updateLecture(Long lectureId, UpdateLectureTitleRequestDto dto) {
-        Lecture lecture = lectureRepository.findById(lectureId)
+        Lecture lecture = lectureQueryRepository.findById(lectureId)
             .orElseThrow(IllegalArgumentException::new);
         lecture.updateTitle(dto.title());
         return new CommonSuccessDto(true);
@@ -47,9 +46,9 @@ public class LectureService {
 
     @Transactional
     public CommonSuccessDto deleteLecture(Long lectureId) {
-        Lecture lecture = lectureRepository.findById(lectureId)
+        Lecture lecture = lectureQueryRepository.findById(lectureId)
             .orElseThrow(IllegalArgumentException::new);
-        lectureRepository.delete(lecture);
+        lectureCommandRepository.delete(lecture);
         return new CommonSuccessDto(true);
     }
 }

@@ -2,7 +2,10 @@ package org.learning.goormquiz.lecture.domain.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import lombok.Builder;
+import org.learning.goormquiz.lecture.repo.entity.Lecture;
 
+@Builder
 public record GetLectureResponseDto(
     Long lectureId,
     String title,
@@ -12,4 +15,17 @@ public record GetLectureResponseDto(
     @JsonProperty(value = "lecture_url") String lectureUrl,
     List<String> goals,
     List<String> target) {
+
+    public static GetLectureResponseDto fromEntity(Lecture lecture) {
+        return GetLectureResponseDto.builder()
+            .lectureId(lecture.getLectureId())
+            .title(lecture.getTitle())
+            .imageUrl(lecture.getImageUrl())
+            .instructor(lecture.getInstructor())
+            .price(lecture.getPrice())
+            .lectureUrl(lecture.getLectureUrl())
+            .goals(lecture.getGoals())
+            .target(lecture.getTarget())
+            .build();
+    }
 }
