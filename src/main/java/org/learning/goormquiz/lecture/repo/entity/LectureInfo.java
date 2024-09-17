@@ -1,4 +1,4 @@
-package org.learning.goormquiz.lecture.domain;
+package org.learning.goormquiz.lecture.repo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;

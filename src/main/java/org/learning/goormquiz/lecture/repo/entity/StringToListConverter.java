@@ -1,4 +1,4 @@
-package org.learning.goormquiz.lecture.domain;
+package org.learning.goormquiz.lecture.repo.entity;
 
 import jakarta.persistence.AttributeConverter;
 import java.util.Arrays;

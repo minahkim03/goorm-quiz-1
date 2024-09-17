@@ -5,7 +5,10 @@ import org.learning.goormquiz.common.domain.dto.CommonSuccessDto;
 import org.learning.goormquiz.lecture.domain.dto.request.CreateLectureRequestDto;
 import org.learning.goormquiz.lecture.domain.dto.request.UpdateLectureTitleRequestDto;
 import org.learning.goormquiz.lecture.domain.dto.response.GetLectureResponseDto;
-import org.learning.goormquiz.lecture.repo.LectureRepository;
+import org.learning.goormquiz.lecture.domain.interfaces.LectureRepository;
+import org.learning.goormquiz.lecture.repo.entity.Lecture;
+import org.learning.goormquiz.lecture.repo.entity.LectureInfo;
+import org.learning.goormquiz.lecture.repo.entity.Price;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +22,8 @@ public class LectureService {
     public GetLectureResponseDto findLecture(Long lectureId) {
         Lecture lecture = lectureRepository.findById(lectureId)
             .orElseThrow(IllegalArgumentException::new);
-        return new GetLectureResponseDto(lecture.getLectureId(), lecture.getTitle(), lecture.getImageUrl(),
+        return new GetLectureResponseDto(lecture.getLectureId(), lecture.getTitle(),
+            lecture.getImageUrl(),
             lecture.getInstructor(), lecture.getPrice(), lecture.getLectureUrl(),
             lecture.getGoals(), lecture.getTarget());
     }
@@ -27,8 +31,8 @@ public class LectureService {
     @Transactional
     public CommonSuccessDto createLecture(CreateLectureRequestDto dto) {
         LectureInfo info = new LectureInfo(dto.title(), dto.goals(), dto.target());
-        Lecture lecture = new Lecture(null, info, dto.instructor(), dto.imageUrl(), dto.price(),
-            dto.lectureUrl());
+        Lecture lecture = new Lecture(null, info, dto.instructor(), dto.imageUrl(),
+            new Price(dto.price()), dto.lectureUrl());
         lectureRepository.save(lecture);
         return new CommonSuccessDto(true);
     }
@@ -43,7 +47,9 @@ public class LectureService {
 
     @Transactional
     public CommonSuccessDto deleteLecture(Long lectureId) {
-        lectureRepository.delete(lectureId);
+        Lecture lecture = lectureRepository.findById(lectureId)
+            .orElseThrow(IllegalArgumentException::new);
+        lectureRepository.delete(lecture);
         return new CommonSuccessDto(true);
     }
 }

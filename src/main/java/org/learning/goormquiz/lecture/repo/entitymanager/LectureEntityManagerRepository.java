@@ -1,13 +1,13 @@
-package org.learning.goormquiz.lecture.repo;
+package org.learning.goormquiz.lecture.repo.entitymanager;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.Optional;
-import org.learning.goormquiz.lecture.domain.Lecture;
+import org.learning.goormquiz.lecture.repo.entity.Lecture;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LectureRepository {
+public class LectureEntityManagerRepository {
 
     @PersistenceContext
     private EntityManager em;
@@ -24,8 +24,7 @@ public class LectureRepository {
         em.merge(lecture);
     }
 
-    public void delete(Long lectureId) {
-        Lecture lecture = em.find(Lecture.class, lectureId);
+    public void delete(Lecture lecture) {
         if (lecture == null) {
             throw new IllegalArgumentException();
         }

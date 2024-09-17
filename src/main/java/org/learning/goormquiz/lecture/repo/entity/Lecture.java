@@ -1,4 +1,4 @@
-package org.learning.goormquiz.lecture.domain;
+package org.learning.goormquiz.lecture.repo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -29,7 +29,8 @@ public class Lecture {
 
     private String imageUrl;
 
-    private int price;
+    @Embedded
+    private Price price;
 
     private String lectureUrl;
 
@@ -43,6 +44,10 @@ public class Lecture {
 
     public List<String> getTarget() {
         return lectureInfo.getTarget();
+    }
+
+    public int getPrice() {
+        return price.getPrice();
     }
 
     public void updateTitle(String title) {
