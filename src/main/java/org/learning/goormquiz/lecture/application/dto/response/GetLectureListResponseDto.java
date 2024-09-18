@@ -1,7 +1,6 @@
 package org.learning.goormquiz.lecture.application.dto.response;
 
 import java.util.List;
-import org.learning.goormquiz.lecture.domain.Lectures;
 
 public record GetLectureListResponseDto(List<GetLectureResponseDto> dtos) {
 

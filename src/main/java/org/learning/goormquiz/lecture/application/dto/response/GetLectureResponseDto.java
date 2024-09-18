@@ -3,7 +3,6 @@ package org.learning.goormquiz.lecture.application.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Builder;
-import org.learning.goormquiz.lecture.domain.Lecture;
 
 @Builder
 public record GetLectureResponseDto(
