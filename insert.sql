@@ -1,3 +1,41 @@
+-- create table
+create table lecture
+(
+    lecture_id  bigint auto_increment
+        primary key,
+    image_url   varchar(255) null,
+    instructor  varchar(255) null,
+    goals       text         null,
+    target      text         null,
+    title       varchar(255) null,
+    lecture_url varchar(255) null,
+    price       int          null
+);
+
+create table member
+(
+    member_id bigint auto_increment
+        primary key,
+    email     varchar(255) null,
+    name      varchar(255) null,
+    password  varchar(255) null,
+    role      varchar(255) null
+);
+
+create table my_lecture
+(
+    id         bigint auto_increment
+        primary key,
+    lecture_id bigint null,
+    member_id  bigint null,
+    constraint fk_my_lecture_lecture
+        foreign key (lecture_id) references lecture (lecture_id),
+    constraint fk_my_lecture_member
+        foreign key (member_id) references member (member_id)
+);
+
+
+
 -- member
 INSERT INTO goorm.member (member_id, email, name, password, role) VALUES (1, 'koo@naver.com', 'koo', '1234', 'ROLE_MEMBER');
 
